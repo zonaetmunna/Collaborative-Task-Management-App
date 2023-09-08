@@ -64,16 +64,16 @@ const TaskList = () => {
     }
 
     return (
-      <table className="w-full border-collapse border border-gray-300">
+      <table className="w-full  border-gray-300">
         <thead>
           <tr className="bg-gray-200">
-            <th className="border border-gray-300 px-4 py-2">Title</th>
-            <th className="border border-gray-300 px-4 py-2">Description</th>
-            <th className="border border-gray-300 px-4 py-2">Due Date</th>
-            <th className="border border-gray-300 px-4 py-2">Assigned User</th>
-            <th className="border border-gray-300 px-4 py-2">Priority</th>
-            <th className="border border-gray-300 px-4 py-2">Status</th>
-            <th className="border border-gray-300 px-4 py-2">Actions</th>
+            <th className=" px-4 py-2 rounded-tl-lg">Title</th>
+            <th className=" px-2 py-2">Description</th>
+            <th className=" px-2 py-2">Due Date</th>
+            <th className=" px-2 py-2">Assigned User</th>
+            <th className=" px-2 py-2">Priority</th>
+            <th className=" px-2 py-2">Status</th>
+            <th className=" px-2 py-2 rounded-tr-lg">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -84,17 +84,12 @@ const TaskList = () => {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
+                  className="bg-white hover:shadow-lg rounded-md shadow-md  py-5 text-center"
                 >
-                  <td className="border border-gray-300 px-4 py-2">
-                    {task.title}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {task.description}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {task.dueDate}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className=" px-2 py-2 rounded-bl-lg ">{task.title}</td>
+                  <td className=" px-2 py-2">{task.description}</td>
+                  <td className=" px-2 py-2">{task.dueDate}</td>
+                  <td className=" px-2 py-2">
                     {/* Dropdown to select assigned user */}
                     <select
                       value={task.assignedUser || ""}
@@ -113,13 +108,9 @@ const TaskList = () => {
                       {/* Add more users here */}
                     </select>
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {task.priority}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {task.status}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className=" px-4 py-2">{task.priority}</td>
+                  <td className=" px-4 py-2">{task.status}</td>
+                  <td className=" px-4 py-2 rounded-br-lg">
                     <button
                       onClick={() =>
                         handleTaskStatusChange(task.id, "completed")
@@ -127,7 +118,6 @@ const TaskList = () => {
                       className="bg-blue-500 text-white px-2 py-1 rounded-lg"
                     >
                       <FaCheck /> {/* Use the FaCheck icon */}
-                      Mark as Completed
                     </button>
                     {/* Add more task actions here */}
                   </td>

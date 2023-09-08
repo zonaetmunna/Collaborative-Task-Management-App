@@ -11,6 +11,9 @@ import { useAuthContext } from "../../../context/AuthContext";
 
 const DashboardSidebar = () => {
   const { logout } = useAuthContext();
+  const signOut = () => {
+    logout();
+  };
   return (
     <aside className="w-64 bg-white shadow-lg">
       <div className="p-4 border-b">
@@ -39,7 +42,7 @@ const DashboardSidebar = () => {
             </Link>
           </li>
           <li>
-            <button onClick={() => logout()} className="flex items-center">
+            <button onClick={signOut} className="flex items-center">
               <FaSignOutAlt className="w-5 h-5 mr-2" /> Logout
             </button>
           </li>
