@@ -2,8 +2,6 @@
 
 This is a simple Task Management Application built using React, Tailwind CSS, and React Beautiful DND (Drag and Drop). It allows you to create, organize, and manage tasks effectively.
 
-![Task Management Application](./screenshot.png)
-
 ## Table of Contents
 
 - [Features](#features)
@@ -44,5 +42,5 @@ Follow these steps to set up the project locally:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/task-management-app.git
+   git clone https://github.com/zonaetmunna/Collaborative-Task-Management-App
    ```
