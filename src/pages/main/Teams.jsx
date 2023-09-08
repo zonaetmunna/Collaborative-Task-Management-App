@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Select from "react-select"; // Import React-Select
 import { useAuthContext } from "../../context/AuthContext";
 
 const Teams = () => {
   const { user, teams, createTeam, joinTeam, leaveTeam, users } =
     useAuthContext();
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const selectOptions = users.map((user) => ({
+    value: user.gmail,
+    label: user.email,
+  }));
+  const [selectedMembers, setSelectedMembers] = useState([]);
   const {
     register,
     handleSubmit,
@@ -16,10 +22,13 @@ const Teams = () => {
 
   const onSubmitCreateTeam = async (data) => {
     try {
-      // Create a new team with the creator as the selected member
+      // Create a new team with the creator and selected members
       const newTeam = await createTeam({
         name: data.teamName,
-        members: [user.id], // Include the ID of the creator as the first member
+        members: [
+          user.data.gmail,
+          ...selectedMembers.map((member) => member.value),
+        ],
       });
       reset();
       toast.success("Team created successfully");
@@ -64,19 +73,14 @@ const Teams = () => {
                 {...register("teamName", { required: true })}
                 className="mr-2 px-2 py-1 border rounded-md w-1/2"
               />
-              {/* show all users  */}
               {/* Create a multi-select dropdown for selecting team members */}
-              <select
-                {...register("selectedMembers", { required: true })}
-                multiple // Enable multiple selection
-                className="mr-2 px-2 py-1 border rounded-md w-1/2"
-              >
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                options={selectOptions}
+                isMulti // Enable multiple selection
+                className=""
+                value={selectedMembers}
+                onChange={(selected) => setSelectedMembers(selected)}
+              />
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-1 rounded-md"
