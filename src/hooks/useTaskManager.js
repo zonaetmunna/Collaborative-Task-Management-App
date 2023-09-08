@@ -1,12 +1,22 @@
-// useTaskManager.js
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useTaskManager = () => {
-  const [tasks, setTasks] = useState([]);
+  // Retrieve tasks from localStorage on initial load
+  const initialTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const [tasks, setTasks] = useState(initialTasks);
+
+  useEffect(() => {
+    // Store tasks in localStorage whenever tasks change
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (taskData) => {
-    // Implement task creation logic and add the task to the tasks array
-    setTasks([...tasks, taskData]);
+    // Generate a unique ID for the new task
+    const taskId = Date.now().toString();
+    const newTask = { id: taskId, ...taskData };
+
+    // Add the new task to the tasks array
+    setTasks([...tasks, newTask]);
   };
 
   const updateTask = (taskId, updatedData) => {
@@ -23,5 +33,11 @@ export const useTaskManager = () => {
     setTasks(updatedTasks);
   };
 
-  return { tasks, addTask, updateTask, deleteTask };
+  // Function to reorder tasks
+  const reorderTasks = (reorderedTasks) => {
+    // Update the tasks order
+    setTasks(reorderedTasks);
+  };
+
+  return { tasks, addTask, updateTask, deleteTask, reorderTasks };
 };

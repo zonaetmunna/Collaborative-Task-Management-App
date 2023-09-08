@@ -1,13 +1,22 @@
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 
 const Login = () => {
   const { login } = useAuthContext();
-  const { register, handleSubmit, errors } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     // Handle login logic here with data.email and data.password
     login({ data });
+    navigate("/");
+    reset();
   };
 
   return (
@@ -55,6 +64,10 @@ const Login = () => {
             Login
           </button>
         </form>
+        {/* go to Register */}
+        <p className="mt-4">
+          Dont have an account? <Link to="/register">Register</Link>
+        </p>
       </div>
     </div>
   );

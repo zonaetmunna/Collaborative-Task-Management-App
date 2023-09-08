@@ -1,13 +1,35 @@
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast"; // Import react-hot-toast
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 
 const Register = () => {
-  const { handleSubmit, register, errors } = useForm();
-  const { register: registerUser } = useAuthContext;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const { registerUser } = useAuthContext();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    // Handle registration logic with data.email, data.password, etc.
-    registerUser(data);
+  const onSubmit = async (data) => {
+    try {
+      // Assuming registerUser is your registration function
+      await registerUser(data);
+
+      // Check for a successful registration (you might need to adjust this condition)
+
+      // Show a success toast
+      toast.success("Registration successful!"); // Show a success toast
+      reset();
+      navigate("/");
+      // Handle the response or perform any necessary actions
+    } catch (error) {
+      // Show an error toast if an exception occurs
+      toast.error("An error occurred during registration."); // Show an error toast
+      console.error("Registration failed:", error);
+    }
   };
 
   return (
@@ -73,6 +95,10 @@ const Register = () => {
             Register
           </button>
         </form>
+        {/* go to login */}
+        <p className="mt-4">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );

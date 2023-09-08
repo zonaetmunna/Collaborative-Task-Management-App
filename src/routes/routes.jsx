@@ -8,6 +8,7 @@ import Home from "../pages/main/Home";
 import Login from "../pages/main/Login";
 import Profile from "../pages/main/Profile";
 import Register from "../pages/main/Register";
+import Teams from "../pages/main/Teams";
 
 export const routes = createBrowserRouter([
   // main
@@ -17,8 +18,12 @@ export const routes = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "",
+        path: "/",
         element: <Home />,
+      },
+      {
+        path: "team",
+        element: <Teams />,
       },
       {
         path: "register",

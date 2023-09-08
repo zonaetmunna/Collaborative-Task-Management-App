@@ -1,6 +1,5 @@
-// TaskContext.js
-import React, { createContext, useContext } from "react";
-import { useTaskManager } from "./useTaskManager";
+import { createContext, useContext } from "react";
+import { useTaskManager } from "../hooks/useTaskManager";
 
 const TaskContext = createContext();
 
@@ -13,5 +12,29 @@ export function TaskProvider({ children }) {
 }
 
 export function useTaskContext() {
-  return useContext(TaskContext);
+  const context = useContext(TaskContext);
+
+  if (!context) {
+    throw new Error("useTaskContext must be used within a TaskProvider");
+  }
+
+  const {
+    addTask,
+    tasks,
+    updateTask,
+    deleteTask,
+    user,
+    reorderTasks, // Include reorderTasks function
+  } = context;
+
+  // ... (The rest of your code)
+
+  return {
+    addTask,
+    tasks,
+    updateTask,
+    deleteTask,
+    user,
+    reorderTasks, // Function to reorder tasks
+  };
 }
