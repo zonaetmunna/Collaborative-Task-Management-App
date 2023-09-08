@@ -19,7 +19,7 @@ export const useAuth = () => {
     setTimeout(() => {
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
-      setUsers([...users, userData]);
+      localStorage.setItem("users", JSON.stringify([...users, userData]));
       setIsLoading(false);
       setIsSuccess(true);
     }, 1000); // Simulate a 1-second delay
@@ -32,7 +32,8 @@ export const useAuth = () => {
     setTimeout(() => {
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
-      setUsers([...users, userData]);
+      localStorage.setItem("users", JSON.stringify([...users, userData]));
+
       setIsLoading(false);
       setIsSuccess(true);
     }, 1000); // Simulate a 1-second delay
@@ -65,7 +66,7 @@ export const useAuth = () => {
 
   //   show all users form users
   const getAllUsers = () => {
-    return users;
+    // setUsers();
   };
 
   // Create a new team

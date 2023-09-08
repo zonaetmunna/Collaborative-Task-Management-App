@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { FaCheck } from "react-icons/fa"; // Import the FaCheck icon
+import Select from "react-select";
 import { useAuthContext } from "../../context/AuthContext";
 import { useTaskContext } from "../../context/TaskContext";
 import TaskForm from "./TaskForm";
 
 const TaskList = () => {
   const { tasks, updateTask, reorderTasks } = useTaskContext();
-  const { user, teams } = useAuthContext();
+  const { user, teams, users } = useAuthContext();
 
   // state
   const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
@@ -91,35 +91,46 @@ const TaskList = () => {
                   <td className=" px-2 py-2">{task.dueDate}</td>
                   <td className=" px-2 py-2">
                     {/* Dropdown to select assigned user */}
-                    <select
-                      value={task.assignedUser || ""}
-                      onChange={(e) => {
-                        const newAssignedUser = e.target.value;
+                    <Select
+                      value={
+                        users.find(
+                          (user) => user.value === task.assignedUser
+                        ) || null
+                      }
+                      onChange={(selectedOption) => {
+                        const newAssignedUser = selectedOption
+                          ? selectedOption.value
+                          : "";
                         const updatedTask = {
                           ...task,
                           assignedUser: newAssignedUser,
                         };
                         updateTask(task.id, updatedTask);
                       }}
-                    >
-                      <option value="">Unassigned</option>
-                      <option value="user1">User 1</option>
-                      <option value="user2">User 2</option>
-                      {/* Add more users here */}
-                    </select>
+                      options={users}
+                      isClearable={true}
+                    />
                   </td>
                   <td className=" px-4 py-2">{task.priority}</td>
                   <td className=" px-4 py-2">{task.status}</td>
                   <td className=" px-4 py-2 rounded-br-lg">
-                    <button
-                      onClick={() =>
-                        handleTaskStatusChange(task.id, "completed")
-                      }
-                      className="bg-blue-500 text-white px-2 py-1 rounded-lg"
-                    >
-                      <FaCheck /> {/* Use the FaCheck icon */}
-                    </button>
-                    {/* Add more task actions here */}
+                    {/* Dropdown to select task status */}
+                    <Select
+                      value={{ value: task.status, label: task.status }}
+                      onChange={(selectedOption) => {
+                        const newStatus = selectedOption
+                          ? selectedOption.value
+                          : "";
+                        handleTaskStatusChange(task.id, newStatus);
+                      }}
+                      options={[
+                        { value: "completed", label: "Completed" },
+                        { value: "inProgress", label: "In Progress" },
+                        { value: "pending", label: "Pending" },
+                        // Add more status options here
+                      ]}
+                      isClearable={true}
+                    />
                   </td>
                 </tr>
               )}
