@@ -1,15 +1,12 @@
-import TaskForm from "../../components/Tasks/TaskForm";
 import TaskList from "../../components/Tasks/TaskList";
 
-const Home = () => {
+const Task = () => {
   return (
     <div>
-      {/* taskForm */}
-      <TaskForm />
       {/* taskList */}
       <TaskList />
     </div>
   );
 };
 
-export default Home;
+export default Task;

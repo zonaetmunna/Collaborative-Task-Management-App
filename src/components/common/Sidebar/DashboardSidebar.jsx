@@ -7,8 +7,10 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const DashboardSidebar = () => {
+  const { logout } = useAuthContext();
   return (
     <aside className="w-64 bg-white shadow-lg">
       <div className="p-4 border-b">
@@ -22,12 +24,12 @@ const DashboardSidebar = () => {
             </Link>
           </li>
           <li className="mb-4">
-            <Link to="/teams" className="flex items-center">
+            <Link to="/team" className="flex items-center">
               <FaUserFriends className="w-5 h-5 mr-2" /> Teams
             </Link>
           </li>
           <li className="mb-4">
-            <Link to="/tasks" className="flex items-center">
+            <Link to="/task" className="flex items-center">
               <FaClipboardCheck className="w-5 h-5 mr-2" /> Tasks
             </Link>
           </li>
@@ -37,9 +39,9 @@ const DashboardSidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/logout" className="flex items-center">
+            <button onClick={() => logout()} className="flex items-center">
               <FaSignOutAlt className="w-5 h-5 mr-2" /> Logout
-            </Link>
+            </button>
           </li>
         </ul>
       </nav>

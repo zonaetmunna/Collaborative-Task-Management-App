@@ -12,6 +12,8 @@ export function AuthProvider({ children }) {
 
 export function useAuthContext() {
   const {
+    isLoading,
+    isSuccess,
     user,
     register: registerUser,
     login,
@@ -23,6 +25,8 @@ export function useAuthContext() {
     teams,
   } = useContext(AuthContext);
   return {
+    isLoading,
+    isSuccess,
     user,
     registerUser,
     login,

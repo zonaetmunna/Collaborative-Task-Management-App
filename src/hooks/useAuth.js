@@ -6,101 +6,113 @@ export const useAuth = () => {
   const storedTeams = JSON.parse(localStorage.getItem("teams")) || [];
   const [user, setUser] = useState(storedUser || null);
   const [teams, setTeams] = useState(storedTeams);
+  // Add isLoading and isSuccess states
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Register a new user
   const register = (userData) => {
-    // Save user data to local storage
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(userData);
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
   // Login a user
   const login = (userData) => {
-    // Save user data to local storage
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(userData);
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
   // Logout a user
   const logout = () => {
-    // Clear user data from local storage
-    localStorage.removeItem("user");
-    setUser(null);
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      localStorage.removeItem("user");
+      setUser(null);
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
   // Update the user's profile
   const updateProfile = (updatedUserData) => {
-    // Merge the updated data with the current user data
-    const updatedUser = { ...user, ...updatedUserData };
-
-    // Update the user data in local storage
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-
-    // Update the user state
-    setUser(updatedUser);
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      const updatedUser = { ...user, ...updatedUserData };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
   // Create a new team
   const createTeam = (teamData) => {
-    // Generate a unique team ID
-    const teamId = Date.now().toString();
-
-    // Create the new team object
-    const newTeam = { id: teamId, ...teamData, members: [user] };
-
-    // Update the teams data in local storage
-    const updatedTeams = [...teams, newTeam];
-    localStorage.setItem("teams", JSON.stringify(updatedTeams));
-
-    // Update the teams state
-    setTeams(updatedTeams);
-
-    // Return the created team object
-    return newTeam;
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      const teamId = Date.now().toString();
+      const newTeam = { id: teamId, ...teamData, members: [user] };
+      const updatedTeams = [...teams, newTeam];
+      localStorage.setItem("teams", JSON.stringify(updatedTeams));
+      setTeams(updatedTeams);
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
   // Join a team
   const joinTeam = (teamId) => {
-    // Find the team by ID
-    const teamToJoin = teams.find((team) => team.id === teamId);
-
-    // Check if the user is already a member
-    if (teamToJoin && !teamToJoin.members.includes(user)) {
-      // Add the user to the team's members
-      teamToJoin.members.push(user);
-
-      // Update the teams data in local storage
-      const updatedTeams = [...teams];
-      localStorage.setItem("teams", JSON.stringify(updatedTeams));
-
-      // Update the teams state
-      setTeams(updatedTeams);
-    }
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      const teamToJoin = teams.find((team) => team.id === teamId);
+      if (teamToJoin && !teamToJoin.members.includes(user)) {
+        teamToJoin.members.push(user);
+        const updatedTeams = [...teams];
+        localStorage.setItem("teams", JSON.stringify(updatedTeams));
+        setTeams(updatedTeams);
+      }
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
-  // Leave a team
   const leaveTeam = (teamId) => {
-    // Find the team by ID
-    const teamToLeave = teams.find((team) => team.id === teamId);
-
-    // Check if the user is a member of the team
-    if (teamToLeave && teamToLeave.members.includes(user)) {
-      // Remove the user from the team's members
-      teamToLeave.members = teamToLeave.members.filter(
-        (member) => member !== user
-      );
-
-      // Update the teams data in local storage
-      const updatedTeams = [...teams];
-      localStorage.setItem("teams", JSON.stringify(updatedTeams));
-
-      // Update the teams state
-      setTeams(updatedTeams);
-    }
+    setIsLoading(true);
+    // Simulate an async operation (e.g., API call) with setTimeout
+    setTimeout(() => {
+      const teamToLeave = teams.find((team) => team.id === teamId);
+      if (teamToLeave && teamToLeave.members.includes(user)) {
+        teamToLeave.members = teamToLeave.members.filter(
+          (member) => member !== user
+        );
+        const updatedTeams = [...teams];
+        localStorage.setItem("teams", JSON.stringify(updatedTeams));
+        setTeams(updatedTeams);
+      }
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); // Simulate a 1-second delay
   };
 
   return {
     user,
+    isLoading,
+    isSuccess,
     register,
     login,
     logout,

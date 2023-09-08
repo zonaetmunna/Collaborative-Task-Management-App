@@ -4,11 +4,12 @@ import ErrorLayout from "../layout/ErrorLayout";
 import MainLayout from "../layout/MainLayout";
 import NotFound from "../layout/NotFound";
 import Dashboard from "../pages/dashboard/Dashboard";
-import Home from "../pages/main/Home";
 import Login from "../pages/main/Login";
 import Profile from "../pages/main/Profile";
 import Register from "../pages/main/Register";
+import Task from "../pages/main/Task";
 import Teams from "../pages/main/Teams";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const routes = createBrowserRouter([
   // main
@@ -19,11 +20,19 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <PrivateRoutes>
+            <Task />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "team",
-        element: <Teams />,
+        element: (
+          <PrivateRoutes>
+            <Teams />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "register",
@@ -35,7 +44,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <PrivateRoutes>
+            <Profile />
+          </PrivateRoutes>
+        ),
       },
     ],
   },
@@ -47,7 +60,11 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoutes>
+            <Dashboard />
+          </PrivateRoutes>
+        ),
       },
     ],
   },

@@ -1,10 +1,8 @@
-// Dashboard.js
 import { useTaskContext } from "../../context/TaskContext";
 
 function Dashboard() {
   const { tasks } = useTaskContext();
 
-  // Calculate task statistics
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(
     (task) => task.status === "completed"
@@ -13,6 +11,65 @@ function Dashboard() {
     (task) => task.status === "inProgress"
   ).length;
   const pendingTasks = tasks.filter((task) => task.status === "pending").length;
+
+  /* useEffect(() => {
+    // Register the necessary controllers and scales
+    Chart.register(CategoryScale, LinearScale, BarController, Title);
+
+    const chartData = {
+      labels: [
+        "Total Tasks",
+        "Completed Tasks",
+        "In Progress Tasks",
+        "Pending Tasks",
+      ],
+      datasets: [
+        {
+          label: "Task Statistics",
+          data: [totalTasks, completedTasks, inProgressTasks, pendingTasks],
+          backgroundColor: [
+            "rgba(54, 162, 235, 0.6)",
+            "rgba(75, 192, 192, 0.6)",
+            "rgba(255, 206, 86, 0.6)",
+            "rgba(255, 99, 132, 0.6)",
+          ],
+          borderColor: [
+            "rgba(54, 162, 235, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(255, 99, 132, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+
+    const ctx = chartRef.current.getContext("2d");
+    const newChartInstance = new Chart(ctx, {
+      type: "bar",
+      data: chartData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            precision: 0,
+          },
+        },
+      },
+    });
+
+    setChartInstance(newChartInstance);
+  }, [
+    totalTasks,
+    completedTasks,
+    inProgressTasks,
+    pendingTasks,
+    chartInstance,
+  ]); */
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
@@ -35,6 +92,7 @@ function Dashboard() {
           <p className="text-3xl font-bold">{pendingTasks}</p>
         </div>
       </div>
+      {/* chart */}
     </div>
   );
 }

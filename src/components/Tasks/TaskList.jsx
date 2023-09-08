@@ -2,11 +2,18 @@ import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaCheck } from "react-icons/fa"; // Import the FaCheck icon
 import { useTaskContext } from "../../context/TaskContext";
+import TaskForm from "./TaskForm";
 
 const TaskList = () => {
   const { tasks, updateTask, reorderTasks } = useTaskContext();
+  const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
+
   const [filterStatus, setFilterStatus] = useState("all");
   const [sortBy, setSortBy] = useState("priority");
+
+  const toggleTaskAdd = () => {
+    setIsTaskAddOpen(!isTaskAddOpen);
+  };
 
   // Filtering tasks based on status
   const filteredTasks = tasks.filter((task) => {
@@ -173,6 +180,16 @@ const TaskList = () => {
               Due Date
             </button>
           </div>
+        </div>
+        <div>
+          <button
+            onClick={toggleTaskAdd}
+            className="bg-green-500 text-white px-2 py-1 rounded-lg"
+          >
+            Add Task
+          </button>
+
+          {isTaskAddOpen && <TaskForm onClose={toggleTaskAdd} />}
         </div>
       </div>
 
