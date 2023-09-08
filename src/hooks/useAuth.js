@@ -4,11 +4,13 @@ export const useAuth = () => {
   // Get user data from local storage when the app starts
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedTeams = JSON.parse(localStorage.getItem("teams")) || [];
+  const storedUsers = JSON.parse(localStorage.getItem("users")) || []; // Added line
+  //   state isLoading and isSuccess states
   const [user, setUser] = useState(storedUser || null);
   const [teams, setTeams] = useState(storedTeams);
-  // Add isLoading and isSuccess states
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [users, setUsers] = useState(storedUsers);
 
   // Register a new user
   const register = (userData) => {
@@ -17,6 +19,7 @@ export const useAuth = () => {
     setTimeout(() => {
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
+      setUsers([...users, userData]);
       setIsLoading(false);
       setIsSuccess(true);
     }, 1000); // Simulate a 1-second delay
@@ -29,6 +32,7 @@ export const useAuth = () => {
     setTimeout(() => {
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
+      setUsers([...users, userData]);
       setIsLoading(false);
       setIsSuccess(true);
     }, 1000); // Simulate a 1-second delay
@@ -57,6 +61,11 @@ export const useAuth = () => {
       setIsLoading(false);
       setIsSuccess(true);
     }, 1000); // Simulate a 1-second delay
+  };
+
+  //   show all users form users
+  const getAllUsers = () => {
+    return users;
   };
 
   // Create a new team
@@ -111,6 +120,7 @@ export const useAuth = () => {
 
   return {
     user,
+    users,
     isLoading,
     isSuccess,
     register,
@@ -121,5 +131,6 @@ export const useAuth = () => {
     joinTeam,
     leaveTeam,
     teams,
+    getAllUsers,
   };
 };

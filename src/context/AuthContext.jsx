@@ -23,6 +23,8 @@ export function useAuthContext() {
     joinTeam,
     leaveTeam,
     teams,
+    getAllUsers,
+    users,
   } = useContext(AuthContext);
   return {
     isLoading,
@@ -36,5 +38,7 @@ export function useAuthContext() {
     joinTeam,
     leaveTeam,
     teams,
+    getAllUsers,
+    users,
   }; // Renamed 'register' to 'registerUser'
 }

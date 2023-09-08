@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaCheck } from "react-icons/fa"; // Import the FaCheck icon
+import { useAuthContext } from "../../context/AuthContext";
 import { useTaskContext } from "../../context/TaskContext";
 import TaskForm from "./TaskForm";
 
 const TaskList = () => {
   const { tasks, updateTask, reorderTasks } = useTaskContext();
-  const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
+  const { user, teams } = useAuthContext();
 
+  // state
+  const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
   const [sortBy, setSortBy] = useState("priority");
 

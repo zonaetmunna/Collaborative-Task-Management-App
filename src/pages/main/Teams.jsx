@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import { useAuthContext } from "../../context/AuthContext";
 
 const Teams = () => {
-  const { user, teams, createTeam, joinTeam, leaveTeam } = useAuthContext();
+  const { user, teams, createTeam, joinTeam, leaveTeam, users } =
+    useAuthContext();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const {
     register,
@@ -15,7 +16,11 @@ const Teams = () => {
 
   const onSubmitCreateTeam = async (data) => {
     try {
-      const newTeam = await createTeam({ name: data.teamName });
+      // Create a new team with the creator as the selected member
+      const newTeam = await createTeam({
+        name: data.teamName,
+        members: [user.id], // Include the ID of the creator as the first member
+      });
       reset();
       toast.success("Team created successfully");
       setSelectedTeam(newTeam);
@@ -24,7 +29,7 @@ const Teams = () => {
     }
   };
 
-  const onSubmitJoinTeam = async (data) => {
+  /* const onSubmitJoinTeam = async (data) => {
     try {
       await joinTeam(data.team);
       reset();
@@ -33,7 +38,7 @@ const Teams = () => {
     } catch (error) {
       toast.error("Failed to join the team");
     }
-  };
+  }; */
 
   const handleLeaveTeam = async () => {
     try {
@@ -59,6 +64,19 @@ const Teams = () => {
                 {...register("teamName", { required: true })}
                 className="mr-2 px-2 py-1 border rounded-md w-1/2"
               />
+              {/* show all users  */}
+              {/* Create a multi-select dropdown for selecting team members */}
+              <select
+                {...register("selectedMembers", { required: true })}
+                multiple // Enable multiple selection
+                className="mr-2 px-2 py-1 border rounded-md w-1/2"
+              >
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-1 rounded-md"
@@ -73,7 +91,7 @@ const Teams = () => {
         </div>
       )}
 
-      {!selectedTeam && (
+      {/* {!selectedTeam && (
         <div className="mb-4">
           <h2 className="text-lg font-semibold mb-2">Join a Team</h2>
           <form onSubmit={handleSubmit(onSubmitJoinTeam)}>
@@ -101,7 +119,7 @@ const Teams = () => {
             {errors.team && <p className="text-red-500">Select a Team.</p>}
           </form>
         </div>
-      )}
+      )} */}
 
       {selectedTeam && (
         <div>
